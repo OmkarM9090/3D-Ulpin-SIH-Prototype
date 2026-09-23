@@ -17,6 +17,7 @@ import {
   PRIMARY_PARCEL,
   UNDERGROUND_ASSETS,
 } from "@/data/demo";
+import { useBhu } from "@/state/bhu";
 import type { NavItem } from "./TopBar";
 import { cn } from "@/lib/utils";
 
@@ -61,6 +62,8 @@ function statusClass(s: string) {
 }
 
 export function SectionView({ section }: { section: NavItem }) {
+  const { approvedUnits, approveUnit } = useBhu();
+
   if (section === "Parcels") {
     return (
       <Shell 
@@ -193,41 +196,68 @@ export function SectionView({ section }: { section: NavItem }) {
       <Shell
         title="Vertical Units"
         sub={`${ALL_UNITS.length} volumetric property units under ${PRIMARY_PARCEL.id}`}
+        action={
+          <Button variant="outline" size="sm" className="h-9 gap-2 border-primary/30 bg-primary/5 text-xs text-primary transition-colors hover:bg-primary/10 hover:text-primary">
+            <Download className="size-3.5" />
+            Export Excel
+          </Button>
+        }
       >
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Unit</TableHead>
-              <TableHead>3D ULPIN</TableHead>
-              <TableHead>Type</TableHead>
-              <TableHead className="text-right">Area</TableHead>
-              <TableHead className="text-right">Z Range</TableHead>
-              <TableHead>Owner</TableHead>
-              <TableHead>Status</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {ALL_UNITS.map((u) => (
-              <TableRow key={u.id}>
-                <TableCell className="tabular">{u.id}</TableCell>
-                <TableCell className="tabular text-primary">{u.ulpin3d}</TableCell>
-                <TableCell>{u.type}</TableCell>
-                <TableCell className="tabular text-right">
-                  {u.area.toLocaleString()} sq.ft
-                </TableCell>
-                <TableCell className="tabular text-right">
-                  {u.zMin}m – {u.zMax}m
-                </TableCell>
-                <TableCell>{u.owner}</TableCell>
-                <TableCell>
-                  <Badge variant="outline" className={cn("text-[10px]", statusClass(u.status))}>
-                    {u.status}
-                  </Badge>
-                </TableCell>
+        <div className="w-full">
+          <Table>
+            <TableHeader className="border-b border-border/50 bg-background/30">
+              <TableRow className="hover:bg-transparent">
+                <TableHead className="h-11 text-[11px] font-bold uppercase tracking-widest text-muted-foreground">Unit</TableHead>
+                <TableHead className="h-11 text-[11px] font-bold uppercase tracking-widest text-muted-foreground">3D ULPIN</TableHead>
+                <TableHead className="h-11 text-[11px] font-bold uppercase tracking-widest text-muted-foreground">Type</TableHead>
+                <TableHead className="h-11 text-right text-[11px] font-bold uppercase tracking-widest text-muted-foreground">Area (sq.ft)</TableHead>
+                <TableHead className="h-11 text-right text-[11px] font-bold uppercase tracking-widest text-muted-foreground">Z Range</TableHead>
+                <TableHead className="h-11 text-[11px] font-bold uppercase tracking-widest text-muted-foreground">Owner</TableHead>
+                <TableHead className="h-11 text-[11px] font-bold uppercase tracking-widest text-muted-foreground">Status</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {ALL_UNITS.map((u) => {
+                const isApproved = approvedUnits.includes(u.id);
+                const displayStatus = isApproved ? "Verified" : u.status;
+                return (
+                  <TableRow key={u.id} className="border-b-border/40 transition-colors hover:bg-surface/40">
+                    <TableCell className="font-medium tracking-wide">{u.id}</TableCell>
+                    <TableCell className="font-mono text-xs text-primary/80">{u.ulpin3d}</TableCell>
+                    <TableCell className="text-[13px]">{u.type}</TableCell>
+                    <TableCell className="tabular text-right text-[13px] font-medium text-muted-foreground">
+                      {u.area.toLocaleString()}
+                    </TableCell>
+                    <TableCell className="tabular text-right text-[12px] text-muted-foreground">
+                      {u.zMin}m – {u.zMax}m
+                    </TableCell>
+                    <TableCell className="text-[13px]">{u.owner}</TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-2">
+                        <Badge
+                          variant="outline"
+                          className={cn("rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider", statusClass(displayStatus))}
+                        >
+                          {displayStatus}
+                        </Badge>
+                        {displayStatus === "Pending" && (
+                          <Button 
+                            size="sm" 
+                            variant="outline" 
+                            className="h-6 text-[10px] px-2 py-0 border-primary/50 text-primary hover:bg-primary/10" 
+                            onClick={() => approveUnit(u.id)}
+                          >
+                            Approve
+                          </Button>
+                        )}
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </div>
       </Shell>
     );
   }

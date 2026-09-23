@@ -1,7 +1,13 @@
 import { Layers } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
 import type { LayerKey } from "@/state/bhu";
 import { useBhu } from "@/state/bhu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuCheckboxItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 
 const LAYERS: { key: LayerKey; label: string }[] = [
   { key: "parcels", label: "Parcels" },
@@ -18,26 +24,25 @@ const LAYERS: { key: LayerKey; label: string }[] = [
 export function LayerControl() {
   const { layers, toggleLayer } = useBhu();
   return (
-    <div className="glass-panel w-[196px] rounded-sm p-2.5">
-      <div className="mb-2 flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-        <Layers className="size-3.5" />
-        Layers
-      </div>
-      <div className="space-y-1.5">
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="sm" className="glass-panel h-9 gap-2 text-[12px]">
+          <Layers className="size-3.5" />
+          Layers
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-[196px] bg-surface/95 backdrop-blur-md border-border/50">
         {LAYERS.map((l) => (
-          <label
+          <DropdownMenuCheckboxItem
             key={l.key}
-            className="flex cursor-pointer items-center gap-2 text-[12px] text-foreground/90"
+            checked={layers[l.key]}
+            onCheckedChange={() => toggleLayer(l.key)}
+            className="text-[12px] text-foreground/90 cursor-pointer focus:bg-primary/20"
           >
-            <Checkbox
-              checked={layers[l.key]}
-              onCheckedChange={() => toggleLayer(l.key)}
-              className="size-3.5"
-            />
             {l.label}
-          </label>
+          </DropdownMenuCheckboxItem>
         ))}
-      </div>
-    </div>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

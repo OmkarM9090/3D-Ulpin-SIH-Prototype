@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BarChart3, Building2, LayoutGrid, Layers3, Map, ShieldCheck, Menu, X } from "lucide-react";
+import { BarChart3, Building2, LayoutGrid, Layers3, Map, ShieldCheck, Menu, X, User } from "lucide-react";
 import type { NavItem } from "./TopBar";
 import { NAV_ITEMS } from "./TopBar";
 import { cn } from "@/lib/utils";
@@ -82,6 +82,17 @@ export function Sidebar({
           <div className="flex items-center justify-between">
             <span>Engine</span>
             <span className="tabular text-primary">3D-ULPIN v0.9</span>
+          </div>
+          <div className="mt-2 border-t border-sidebar-border/50 pt-3">
+            <div className="flex items-center gap-3 rounded-md bg-secondary/30 p-2.5 border border-border/50 transition-colors hover:bg-secondary/50 cursor-pointer">
+              <span className="flex size-9 items-center justify-center rounded-full bg-primary/20 ring-1 ring-primary/40 shadow-[0_0_10px_rgba(var(--color-primary),0.2)]">
+                <User className="size-4.5 text-primary" />
+              </span>
+              <span className="leading-tight">
+                <span className="block text-[12px] font-bold tracking-wide text-foreground">Survey Admin</span>
+                <span className="block text-[10px] uppercase tracking-wider text-muted-foreground mt-0.5">Pune Circle</span>
+              </span>
+            </div>
           </div>
         </div>
       </aside>

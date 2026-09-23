@@ -58,6 +58,8 @@ interface BhuState {
   focusOn: (target: [number, number, number], distance?: number) => void;
   generatedUlpins: string[];
   addGeneratedUlpin: (u: string) => void;
+  approvedUnits: string[];
+  approveUnit: (id: string) => void;
 }
 
 const Ctx = createContext<BhuState | null>(null);
@@ -82,6 +84,7 @@ export function BhuProvider({ children }: { children: ReactNode }) {
   const [cameraPreset, setCameraPresetState] = useState({ preset: "reset" as CameraPreset, ts: 0 });
   const [focus, setFocus] = useState<FocusRequest | null>(null);
   const [generatedUlpins, setGenerated] = useState<string[]>([]);
+  const [approvedUnits, setApprovedUnits] = useState<string[]>([]);
 
   const toggleLayer = useCallback((k: LayerKey) => {
     setLayers((prev) => ({ ...prev, [k]: !prev[k] }));
@@ -128,6 +131,9 @@ export function BhuProvider({ children }: { children: ReactNode }) {
       generatedUlpins,
       addGeneratedUlpin: (u: string) =>
         setGenerated((prev) => (prev.includes(u) ? prev : [...prev, u])),
+      approvedUnits,
+      approveUnit: (id: string) =>
+        setApprovedUnits((prev) => (prev.includes(id) ? prev : [...prev, id])),
     }),
     [
       view,
@@ -145,6 +151,7 @@ export function BhuProvider({ children }: { children: ReactNode }) {
       focus,
       focusOn,
       generatedUlpins,
+      approvedUnits,
     ],
   );
 

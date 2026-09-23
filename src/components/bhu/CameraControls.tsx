@@ -37,7 +37,10 @@ export function CameraControls() {
       </div>
 
       <div className="glass-panel flex size-14 items-center justify-center rounded-full">
-        <div className="relative flex size-11 items-center justify-center rounded-full border border-primary/30">
+        <div 
+          className="relative flex size-11 items-center justify-center rounded-full border border-primary/30"
+          style={{ transform: "rotate(var(--compass-rotation, 0rad))" }}
+        >
           <Compass className="size-5 text-primary" />
           <span className="tabular absolute -top-0.5 text-[8px] font-bold text-primary">N</span>
           <span className="tabular absolute -bottom-0.5 text-[8px] text-muted-foreground">S</span>

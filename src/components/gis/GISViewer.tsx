@@ -76,6 +76,11 @@ function CameraRig() {
     ) {
       animating.current = false;
     }
+
+    // Update compass rotation CSS variable
+    const target = controls.current ? controls.current.target : desiredTarget.current;
+    const az = Math.atan2(camera.position.x - target.x, camera.position.z - target.z);
+    document.documentElement.style.setProperty('--compass-rotation', `${az}rad`);
   });
 
   return (

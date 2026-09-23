@@ -68,35 +68,35 @@ export function ValidationPanel() {
   }
 
   return (
-    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-border bg-surface/80 px-3 py-2 backdrop-blur">
+    <div className="flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-border/50 bg-background/60 px-4 py-3 backdrop-blur-xl shadow-[0_-10px_40px_rgba(0,0,0,0.2)]">
       <div className="flex items-center gap-2">
-        <Button size="sm" className="h-8 text-[12px]" onClick={runValidation} disabled={running}>
+        <Button size="sm" className="h-9 px-4 text-[12px] font-bold tracking-wide shadow-lg shadow-primary/20 transition-all hover:shadow-primary/40" onClick={runValidation} disabled={running}>
           {running ? (
-            <Loader2 className="size-3.5 animate-spin" />
+            <Loader2 className="size-4 animate-spin" />
           ) : (
-            <ShieldCheck className="size-3.5" />
+            <ShieldCheck className="size-4" />
           )}
-          Run Spatial Validation
+          RUN SPATIAL VALIDATION
         </Button>
         {conflict ? (
           <Button
             size="sm"
             variant="outline"
-            className="h-8 border-success/50 text-[12px] text-success"
+            className="h-9 border-success/50 bg-success/5 px-4 text-[12px] font-bold tracking-wide text-success transition-all hover:bg-success/10 hover:text-success"
             onClick={() => {
               resolveConflict();
               setChecks(BASE_CHECKS.map((c) => ({ ...c, state: "pass" })));
               toast.success("Conflict resolved", { description: "Valid geometry restored" });
             }}
           >
-            <Wrench className="size-3.5" />
-            Resolve Conflict
+            <Wrench className="size-4" />
+            RESOLVE CONFLICT
           </Button>
         ) : (
           <Button
             size="sm"
             variant="outline"
-            className="h-8 border-destructive/45 text-[12px] text-destructive"
+            className="h-9 border-destructive/40 bg-destructive/5 px-4 text-[12px] font-bold tracking-wide text-destructive transition-all hover:bg-destructive/10 hover:text-destructive"
             onClick={() => {
               setView("3d");
               simulateConflict();
@@ -109,34 +109,35 @@ export function ValidationPanel() {
               });
             }}
           >
-            <TriangleAlert className="size-3.5" />
-            Simulate Conflict
+            <TriangleAlert className="size-4" />
+            SIMULATE CONFLICT
           </Button>
         )}
       </div>
 
-      <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-3.5 gap-y-1">
+      <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-5 gap-y-2">
         {checks.map((c) => (
-          <div key={c.id} className="flex items-center gap-1.5 text-[11.5px]" title={c.detail}>
+          <div key={c.id} className="flex items-center gap-2 text-[11.5px]" title={c.detail}>
             {c.state === "running" ? (
-              <Loader2 className="size-3.5 animate-spin text-primary" />
+              <Loader2 className="size-4 animate-spin text-primary" />
             ) : c.state === "fail" ? (
-              <AlertTriangle className="size-3.5 text-destructive" />
+              <AlertTriangle className="size-4 text-destructive" />
             ) : (
               <CheckCircle2
                 className={cn(
-                  "size-3.5",
-                  c.state === "pass" ? "text-success" : "text-muted-foreground/40",
+                  "size-4",
+                  c.state === "pass" ? "text-success" : "text-muted-foreground/30",
                 )}
               />
             )}
             <span
               className={cn(
+                "font-medium tracking-wide",
                 c.state === "fail"
                   ? "text-destructive"
                   : c.state === "pass"
                     ? "text-foreground"
-                    : "text-muted-foreground",
+                    : "text-muted-foreground/70",
               )}
             >
               {c.label}
@@ -145,18 +146,22 @@ export function ValidationPanel() {
         ))}
       </div>
 
-      <div className="tabular ml-auto flex items-center gap-3 text-[11px] text-muted-foreground">
-        <span>
-          Status:{" "}
+      <div className="tabular ml-auto flex items-center gap-5 text-[11px] uppercase tracking-widest text-muted-foreground/70">
+        <div className="flex items-center gap-2">
+          <span>Status:</span>
           <span
             className={cn(
+              "font-bold",
               anyFail ? "text-destructive" : allPass ? "text-success" : "text-muted-foreground",
             )}
           >
             {anyFail ? "CONFLICT" : allPass ? "ALL SPATIAL CHECKS PASSED" : "NOT VALIDATED"}
           </span>
-        </span>
-        <span>Last run: {validatedAt ?? "—"}</span>
+        </div>
+        <div className="flex items-center gap-2 border-l border-border/50 pl-5">
+          <span>Last run:</span>
+          <span className="font-semibold text-foreground/80">{validatedAt ?? "—"}</span>
+        </div>
       </div>
     </div>
   );

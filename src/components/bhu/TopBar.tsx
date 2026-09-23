@@ -90,7 +90,7 @@ export function TopBar({
         </div>
       </div>
 
-      <nav className="ml-4 hidden items-center gap-0.5 overflow-x-auto xl:flex">
+      <nav className="ml-4 hidden items-center gap-0.5 overflow-x-auto scrollbar-hide md:flex flex-1">
         {NAV_ITEMS.map((item) => (
           <button
             key={item}
@@ -106,8 +106,8 @@ export function TopBar({
         ))}
       </nav>
 
-      <div className="ml-auto flex items-center gap-2">
-        <div className="hidden lg:flex items-center gap-2 mr-2">
+      <div className="ml-auto flex items-center gap-2 shrink-0">
+        <div className="hidden md:flex items-center gap-2 mr-2">
           <Button size="sm" className="h-8 px-3 text-[11px] font-bold tracking-wide shadow-lg shadow-primary/20 transition-all hover:shadow-primary/40" onClick={runValidation} disabled={running}>
             {running ? (
               <Loader2 className="size-3.5 animate-spin mr-1.5" />

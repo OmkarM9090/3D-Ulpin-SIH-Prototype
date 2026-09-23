@@ -76,8 +76,8 @@ export function SectionView({ section }: { section: NavItem }) {
           </Button>
         }
       >
-        <div className="w-full">
-          <Table>
+        <div className="w-full overflow-x-auto pb-2">
+          <Table className="min-w-[600px]">
             <TableHeader className="border-b border-border/50 bg-background/30">
               <TableRow className="hover:bg-transparent">
                 <TableHead className="h-11 text-[11px] font-bold uppercase tracking-widest text-muted-foreground">Parcel ID</TableHead>
@@ -203,8 +203,8 @@ export function SectionView({ section }: { section: NavItem }) {
           </Button>
         }
       >
-        <div className="w-full">
-          <Table>
+        <div className="w-full overflow-x-auto pb-2">
+          <Table className="min-w-[700px]">
             <TableHeader className="border-b border-border/50 bg-background/30">
               <TableRow className="hover:bg-transparent">
                 <TableHead className="h-11 text-[11px] font-bold uppercase tracking-widest text-muted-foreground">Unit</TableHead>

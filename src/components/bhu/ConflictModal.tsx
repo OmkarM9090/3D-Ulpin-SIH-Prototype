@@ -21,8 +21,7 @@ export function ConflictModal() {
             {conflict.type}
           </Badge>
         </div>
-        
-        <div className="grid grid-cols-2 divide-x divide-border/50 bg-background/90">
+        <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-border/50 bg-background/90">
           <div className="p-5">
             <div className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground mb-4 flex items-center gap-2">
               <span className="size-2 rounded-full bg-warning animate-pulse" />
@@ -66,7 +65,7 @@ export function ConflictModal() {
           </div>
         </div>
         
-        <div className="flex items-center justify-between border-t border-border/50 bg-surface/80 px-5 py-4">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-t border-border/50 bg-surface/80 px-5 py-4">
           <div className="text-[11.5px] text-muted-foreground">
             <span className="font-bold text-foreground">Action required:</span> {conflict.action}
           </div>

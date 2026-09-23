@@ -22,7 +22,6 @@ export function ProcessSection() {
       </h2>
 
       <div className="relative flex flex-col gap-12 md:gap-24">
-        {/* Animated Connecting Line */}
         <div className="absolute left-8 top-0 h-full w-[1px] bg-border md:left-1/2 md:-translate-x-1/2">
           <div className="absolute left-0 top-0 h-1/2 w-full bg-gradient-to-b from-primary via-primary/50 to-transparent" />
         </div>
@@ -32,21 +31,17 @@ export function ProcessSection() {
           return (
             <div
               key={stage.num}
-              className={`relative flex items-center gap-8 md:w-1/2 ${isEven ? "md:self-start md:pr-12" : "md:self-end md:flex-row-reverse md:pl-12"}`}
+              className={`relative flex items-center md:w-1/2 ${isEven ? "md:justify-end md:pr-12 md:self-start" : "md:justify-start md:pl-12 md:self-end"}`}
             >
               {/* Node Point */}
               <div
-                className="absolute left-8 flex size-12 -translate-x-1/2 items-center justify-center rounded-full border border-primary/30 bg-background md:left-auto md:translate-x-0"
-                style={{
-                  [isEven ? "right" : "left"]: "0",
-                  transform: isEven ? "translateX(50%)" : "translateX(-50%)",
-                }}
+                className={`absolute left-8 flex size-12 -translate-x-1/2 items-center justify-center rounded-full border border-primary/30 bg-background md:left-auto md:translate-x-0 ${isEven ? "md:-right-6" : "md:-left-6"}`}
               >
                 <stage.Icon className="size-5 text-primary" />
               </div>
 
               {/* Content Card */}
-              <div className="ml-16 flex flex-col items-start md:ml-0 md:w-full">
+              <div className="ml-20 flex flex-col items-start md:ml-0 md:w-full">
                 <span className="mb-2 font-mono text-4xl font-light text-muted-foreground/30">
                   {stage.num}
                 </span>

@@ -50,7 +50,7 @@ function statusClass(s: string) {
 export function SectionView({ section }: { section: NavItem }) {
   if (section === "Parcels") {
     return (
-      <Shell title="Parcels" sub="Cadastral registry · Lucknow Circle (synthetic demo records)">
+      <Shell title="Parcels" sub="Cadastral registry · Pune Circle (synthetic demo records)">
         <Table>
           <TableHeader>
             <TableRow>
@@ -129,7 +129,7 @@ export function SectionView({ section }: { section: NavItem }) {
               <dl className="tabular mt-3 space-y-1 text-[11.5px] text-muted-foreground">
                 <div className="flex justify-between">
                   <dt>Parcel</dt>
-                  <dd className="text-foreground">UP-LKO-P12344{i + 1}</dd>
+                  <dd className="text-foreground">MH-PUN-P12344{i + 1}</dd>
                 </div>
                 <div className="flex justify-between">
                   <dt>Est. floors</dt>

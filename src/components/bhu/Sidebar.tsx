@@ -73,11 +73,11 @@ export function Sidebar({
         <div className="mt-auto space-y-3 border-t border-sidebar-border/50 bg-background/30 p-4 text-[11px] text-muted-foreground backdrop-blur-sm">
           <div className="flex items-center justify-between">
             <span>Survey Circle</span>
-            <span className="tabular text-foreground">LKO-06</span>
+            <span className="tabular text-foreground">PUN-06</span>
           </div>
           <div className="flex items-center justify-between">
             <span>CRS</span>
-            <span className="tabular text-foreground">EPSG:32644</span>
+            <span className="tabular text-foreground">EPSG:32643</span>
           </div>
           <div className="flex items-center justify-between">
             <span>Engine</span>

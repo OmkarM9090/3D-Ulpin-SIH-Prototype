@@ -71,7 +71,7 @@ export function TopBar({
           </span>
           <span className="leading-tight">
             <span className="block text-[11px] font-medium">Survey Admin</span>
-            <span className="block text-[10px] text-muted-foreground">Lucknow Circle</span>
+            <span className="block text-[10px] text-muted-foreground">Pune Circle</span>
           </span>
         </button>
         <button className="rounded-sm p-2 text-muted-foreground xl:hidden" aria-label="Search">

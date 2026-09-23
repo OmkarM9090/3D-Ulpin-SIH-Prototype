@@ -8,13 +8,13 @@ import type {
   ValidationCheck,
 } from "./types";
 
-export const STATE = "Uttar Pradesh";
-export const STATE_CODE = "UP";
-export const DISTRICT = "Lucknow";
-export const DISTRICT_CODE = "LKO";
+export const STATE = "Maharashtra";
+export const STATE_CODE = "MH";
+export const DISTRICT = "Pune";
+export const DISTRICT_CODE = "PUN";
 
 export const PRIMARY_PARCEL: Parcel = {
-  id: "UP-LKO-P123456",
+  id: "MH-PUN-P123456",
   name: "Gomti Nagar Vistar — Sector 6",
   state: STATE,
   stateCode: STATE_CODE,
@@ -45,16 +45,16 @@ function ring(cx: number, cz: number, w: number, d: number): [number, number][] 
  * roads occupy z 35..45, z -46..-38 and x -49..-41.
  */
 const SURROUNDING_DEFS: { c: [number, number]; s: [number, number]; id: string }[] = [
-  { c: [-72, -66], s: [40, 26], id: "UP-LKO-P123441" },
-  { c: [-14, -66], s: [42, 26], id: "UP-LKO-P123442" },
-  { c: [36, -66], s: [36, 26], id: "UP-LKO-P123443" },
-  { c: [-74, -14], s: [36, 36], id: "UP-LKO-P123444" },
-  { c: [-74, 20], s: [36, 24], id: "UP-LKO-P123445" },
-  { c: [66, -10], s: [38, 40], id: "UP-LKO-P123446" },
-  { c: [66, 22], s: [38, 20], id: "UP-LKO-P123447" },
-  { c: [-72, 72], s: [40, 40], id: "UP-LKO-P123448" },
-  { c: [-14, 72], s: [44, 40], id: "UP-LKO-P123449" },
-  { c: [60, 72], s: [36, 40], id: "UP-LKO-P123450" },
+  { c: [-72, -66], s: [40, 26], id: "MH-PUN-P123441" },
+  { c: [-14, -66], s: [42, 26], id: "MH-PUN-P123442" },
+  { c: [36, -66], s: [36, 26], id: "MH-PUN-P123443" },
+  { c: [-74, -14], s: [36, 36], id: "MH-PUN-P123444" },
+  { c: [-74, 20], s: [36, 24], id: "MH-PUN-P123445" },
+  { c: [66, -10], s: [38, 40], id: "MH-PUN-P123446" },
+  { c: [66, 22], s: [38, 20], id: "MH-PUN-P123447" },
+  { c: [-72, 72], s: [40, 40], id: "MH-PUN-P123448" },
+  { c: [-14, 72], s: [44, 40], id: "MH-PUN-P123449" },
+  { c: [60, 72], s: [36, 40], id: "MH-PUN-P123450" },
 ];
 
 export const SURROUNDING_PARCELS: Parcel[] = SURROUNDING_DEFS.map((p, i) => ({

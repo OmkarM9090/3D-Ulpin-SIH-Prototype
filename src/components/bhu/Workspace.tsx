@@ -94,7 +94,7 @@ export function Workspace() {
             {PRIMARY_PARCEL.id} · {BUILDING.id}
           </div>
           <div className="tabular text-[10.5px] text-muted-foreground">
-            26.8467° N, 80.9462° E · EPSG:32644 · {layers.dem ? "DEM ON" : "DEM OFF"}
+            18.5204° N, 73.8567° E · EPSG:32643 · {layers.dem ? "DEM ON" : "DEM OFF"}
           </div>
         </div>
 

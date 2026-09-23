@@ -1,4 +1,5 @@
-import { FileBarChart, Layers3, CheckCircle2, Activity } from "lucide-react";
+import { FileBarChart, Layers3, CheckCircle2, Activity, Download } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
   Table,
@@ -23,10 +24,12 @@ function Shell({
   title,
   sub,
   children,
+  action,
 }: {
   title: string;
   sub: string;
   children: React.ReactNode;
+  action?: React.ReactNode;
 }) {
   return (
     <div className="relative h-full overflow-auto bg-background/50 p-6 md:p-8">
@@ -35,9 +38,12 @@ function Shell({
         className="pointer-events-none absolute inset-0 opacity-[0.02]" 
         style={{ backgroundImage: "radial-gradient(circle at 2px 2px, white 1px, transparent 0)", backgroundSize: "32px 32px" }} 
       />
-      <div className="relative z-10 mb-8 flex flex-col gap-1">
-        <h1 className="text-2xl font-light tracking-tight">{title}</h1>
-        <p className="text-[12px] font-medium tracking-wide text-muted-foreground">{sub}</p>
+      <div className="relative z-10 mb-8 flex items-end justify-between gap-4">
+        <div className="flex flex-col gap-1.5">
+          <h1 className="font-serif text-3xl font-medium tracking-tight text-foreground/90">{title}</h1>
+          <p className="text-[12px] font-medium tracking-wide text-muted-foreground">{sub}</p>
+        </div>
+        {action && <div>{action}</div>}
       </div>
       <div className="relative z-10 rounded-xl border border-border/50 bg-card/30 backdrop-blur-xl shadow-xl overflow-hidden">
         {children}
@@ -57,39 +63,67 @@ function statusClass(s: string) {
 export function SectionView({ section }: { section: NavItem }) {
   if (section === "Parcels") {
     return (
-      <Shell title="Parcels" sub="Cadastral registry · Pune Circle (synthetic demo records)">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Parcel ID</TableHead>
-              <TableHead>ULPIN</TableHead>
-              <TableHead>District</TableHead>
-              <TableHead className="text-right">Area (m²)</TableHead>
-              <TableHead>3D Status</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {ALL_PARCELS.map((p) => (
-              <TableRow key={p.id}>
-                <TableCell className="tabular">{p.id}</TableCell>
-                <TableCell className="tabular text-muted-foreground">{p.ulpin}</TableCell>
-                <TableCell>{p.district}</TableCell>
-                <TableCell className="tabular text-right">{p.area.toLocaleString()}</TableCell>
-                <TableCell>
-                  <Badge
-                    variant="outline"
-                    className={cn(
-                      "text-[10px]",
-                      p.primary ? statusClass("Verified") : "text-muted-foreground",
-                    )}
-                  >
-                    {p.primary ? "3D Modelled" : "2D Only"}
-                  </Badge>
-                </TableCell>
+      <Shell 
+        title="Parcels" 
+        sub="Cadastral registry · Pune Circle (synthetic demo records)"
+        action={
+          <Button variant="outline" size="sm" className="h-9 gap-2 border-primary/30 bg-primary/5 text-xs text-primary transition-colors hover:bg-primary/10 hover:text-primary">
+            <Download className="size-3.5" />
+            Export CSV
+          </Button>
+        }
+      >
+        <div className="w-full">
+          <Table>
+            <TableHeader className="border-b border-border/50 bg-background/30">
+              <TableRow className="hover:bg-transparent">
+                <TableHead className="h-11 text-[11px] font-bold uppercase tracking-widest text-muted-foreground">Parcel ID</TableHead>
+                <TableHead className="h-11 text-[11px] font-bold uppercase tracking-widest text-muted-foreground">ULPIN</TableHead>
+                <TableHead className="h-11 text-[11px] font-bold uppercase tracking-widest text-muted-foreground">District</TableHead>
+                <TableHead className="h-11 text-[11px] font-bold uppercase tracking-widest text-muted-foreground">Dimensions (W×D)</TableHead>
+                <TableHead className="h-11 text-[11px] font-bold uppercase tracking-widest text-muted-foreground">Z Axis (Underground)</TableHead>
+                <TableHead className="h-11 text-right text-[11px] font-bold uppercase tracking-widest text-muted-foreground">Area (m²)</TableHead>
+                <TableHead className="h-11 text-[11px] font-bold uppercase tracking-widest text-muted-foreground">3D Status</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {ALL_PARCELS.map((p) => {
+                const xs = p.geometry.map((pt) => pt[0]);
+                const zs = p.geometry.map((pt) => pt[1]);
+                const w = Math.round(Math.max(...xs) - Math.min(...xs));
+                const d = Math.round(Math.max(...zs) - Math.min(...zs));
+
+                return (
+                  <TableRow key={p.id} className="border-b-border/40 transition-colors hover:bg-surface/40">
+                    <TableCell className="font-medium tracking-wide">{p.id}</TableCell>
+                    <TableCell className="font-mono text-xs text-muted-foreground/80">{p.ulpin}</TableCell>
+                    <TableCell className="text-[13px]">{p.district}</TableCell>
+                    <TableCell className="tabular text-[13px] text-muted-foreground">{w}m × {d}m</TableCell>
+                    <TableCell className="tabular text-[12px]">
+                      {p.primary ? (
+                        <span className="text-chart-4/80">Down to -12m</span>
+                      ) : (
+                        <span className="text-muted-foreground/50">Surface Only</span>
+                      )}
+                    </TableCell>
+                    <TableCell className="tabular text-right font-medium">{p.area.toLocaleString()}</TableCell>
+                    <TableCell>
+                      <Badge
+                        variant="outline"
+                        className={cn(
+                          "rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider",
+                          p.primary ? "border-success/30 bg-success/10 text-success" : "border-border/50 bg-background/50 text-muted-foreground/70",
+                        )}
+                      >
+                        {p.primary ? "3D Modelled" : "2D Only"}
+                      </Badge>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </div>
       </Shell>
     );
   }

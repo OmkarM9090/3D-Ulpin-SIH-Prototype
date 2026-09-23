@@ -8,8 +8,8 @@ const publicDir = path.join(rootDir, ".output", "public");
 const serverEntry = path.join(rootDir, ".output", "server", "index.mjs");
 
 if (!fs.existsSync(serverEntry)) {
-  console.error(`Server entry not found at ${serverEntry}`);
-  process.exit(1);
+  console.log(`Server entry not found at ${serverEntry}. Skipping static export (expected when deploying to Vercel).`);
+  process.exit(0);
 }
 
 const base =

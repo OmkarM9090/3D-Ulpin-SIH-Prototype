@@ -60,7 +60,7 @@ function CadastralTransformation() {
     if (buildingRef.current) {
       buildingRef.current.scale.y = p4;
       buildingRef.current.position.y = (numFloors * floorHeight * p4) / 2;
-      (buildingRef.current.children[0] as THREE.Mesh).material.opacity = (1 - p5) * p4; // fades out as floors separate
+      ((buildingRef.current.children[0] as THREE.Mesh).material as THREE.Material).opacity = (1 - p5) * p4; // fades out as floors separate
     }
 
     if (floorsRef.current) {

@@ -6,10 +6,10 @@ import { cn } from "@/lib/utils";
 export const NAV_ITEMS = [
   "Overview",
   "3D Property Map",
+  "Validation",
   "Parcels",
   "Buildings",
   "Vertical Units",
-  "Validation",
   "Reports",
 ] as const;
 
